@@ -6,5 +6,5 @@ export interface StoreType {
     x_cnts: string;
     y_dnts: string;
     rdn_code_nm: string;
-    crftc_gbn_nm: string;
+    crtfc_gbn_nm: string;
 }
