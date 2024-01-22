@@ -3,12 +3,11 @@ import Link from "next/link"
 import store from "@/data/store_data.json"
 import Map from "@/components/Map"
 import StoreBox from "@/components/StoreBox";
+import { useState } from "react";
 
 // global kakao
 import Script from "next/script";
 import Markers from "@/components/Markers";
-import { useState } from "react";
-
 
 declare global {
   interface Window {
