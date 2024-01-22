@@ -1,15 +1,16 @@
 import { StoreType } from "@/interface";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
 
 
 interface MarkerProps {
     map: any;
     storeDatas: any[];
+    setCurrentStore: Dispatch<SetStateAction<any>>
 }
 
-export default function Markers({ map, storeDatas }: MarkerProps) {
+export default function Markers({ map, storeDatas, setCurrentStore }: MarkerProps) {
 
-    const loadKakaoMarkers = () => {
+    const loadKakaoMarkers = useCallback(() => {
 
         // 식당 데이터 마커
         if (map) {
@@ -54,13 +55,18 @@ export default function Markers({ map, storeDatas }: MarkerProps) {
                     customOverlay.setMap(null);
                 })
 
+                // set current store
+                window.kakao.maps.event.addListener(marker, "click", function () {
+                    setCurrentStore(store);
+                })
+
             })
         }
-    }
+    }, [map, setCurrentStore, storeDatas]);
 
     useEffect(() => {
         loadKakaoMarkers();
-    }, [map]);
+    }, [loadKakaoMarkers, map]);
 
 
     return <></>
