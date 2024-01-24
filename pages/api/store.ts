@@ -12,7 +12,9 @@ export default async function handler(
     // const stores = (await import("../../data/store_data.json"))["DATA"] as StoreType[];
 
     // prisma로 가져오는 방법
-    const stores = await prisma.store.findMany();
+    const stores = await prisma.store.findMany({
+        orderBy: {id: "asc"}
+    });
 
     res.status(200).json(stores);
 }

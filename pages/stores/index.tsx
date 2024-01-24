@@ -1,12 +1,24 @@
+import Loading from "@/components/Loading";
 import { StoreType } from "@/interface";
 import axios from "axios";
 import Image from "next/image";
+import { useQuery } from "react-query";
 
-export default function StoreListPage({ stores }: { stores: StoreType[] }) {
+export default function StoreListPage() {
+
+    const { isLoading, isError, data: stores } = useQuery("stores", async () => {
+        const { data } = await axios("/api/store");
+        return data as StoreType[];
+    })
+
+    if (isError) {
+        return <div className="w-full h-screen mx-auto pt-[10%] text-red-500 font-semibold">다시 시도해 주세요</div>
+    }
+
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
             <ul role="list" className="divide-y divide-gray-100">
-                {stores?.map((store, index) => (
+                {isLoading ? <Loading/> : stores?.map((store, index) => (
                     <li className="flex justify-between gap-x-6 py-5" key={index}>
                         <div className="flex gap-x-4">
                             <Image width={48} height={48} alt="image"
@@ -35,17 +47,18 @@ export default function StoreListPage({ stores }: { stores: StoreType[] }) {
     )
 }
 
-export async function getServerSideProps() {
+// react query 사용 전
+// export async function getServerSideProps() {
 
-    // data fetch
-    // const stores = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/store`).then((res) => res.json());
-    // return {
-    //     props: { stores },
-    // }
+//     // data fetch
+//     // const stores = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/store`).then((res) => res.json());
+//     // return {
+//     //     props: { stores },
+//     // }
 
-    // data fetch through axios
-    const stores = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/store`);
-    return {
-        props: { stores: stores.data },
-    }
-}
+//     // data fetch through axios
+//     const stores = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/store`);
+//     return {
+//         props: { stores: stores.data },
+//     }
+// }
