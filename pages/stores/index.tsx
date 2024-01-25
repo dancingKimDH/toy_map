@@ -10,15 +10,24 @@ import Pagination from "@/components/Pagination";
 export default function StoreListPage() {
 
     const router = useRouter();
+
+    // destructure page from router.query ---> /store?page=2 ---> page:"2"
     const { page = "1" }: any = router.query;
 
-    console.log(page);
-
+    // useQuery Hook: Manage and cache asynchronous data in React app
+    // `stores-${page}`: Query Key ---> unique identifier for the query ... Each page with own cache entry
     const { isLoading, isError, data: stores } = useQuery(`stores-${page}`, async () => {
+        
+        // The res from axios is awaited and destructured to get the 'data' prop
         const { data } = await axios(`/api/store?page=${page}`);
+
+        // axios makes HTTP requests and returns a Promise, an object representing the eventual completion/failure of an asynchronous operation
+        // The await keyword pauses the execution of the function until the Promise is resolved or rejected.
+
         return data as StoreApiResponse;
     })
 
+    // The result of useQuery destructured into three props ---> isLoading, isError, data(data returned from the query, later renamed as stores)
     if (isError) {
         return <div className="w-full h-screen mx-auto pt-[10%] text-red-500 font-semibold">다시 시도해 주세요</div>
     }

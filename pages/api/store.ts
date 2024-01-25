@@ -10,13 +10,17 @@ export default async function handler(
 
     // pagination page setting
     const { page = "1" }: { page?: string } = req.query;
+
+    // Converts page string to an integer and subtracts 1 ---> pagination in programming starts from 0
     const skipPage = parseInt(page) - 1;
+
+    // Count the number of records in the store tables
     const count = await prisma.store.count();
 
-    // 직접 import 하는 방법
+    // Fetch directly
     // const stores = (await import("../../data/store_data.json"))["DATA"] as StoreType[];
 
-    // prisma로 가져오는 방법 + pagination
+    // Fetch through prisma + pagination
     const stores = await prisma.store.findMany({
         orderBy: { id: "asc" },
         take: 10,
@@ -27,6 +31,7 @@ export default async function handler(
         page: parseInt(page),
         data: stores,
         totalCount: count,
+        // Math.ceil ---> rounds a number up to the nearest whole number
         totalPage: Math.ceil(count / 10)
     });
 }
