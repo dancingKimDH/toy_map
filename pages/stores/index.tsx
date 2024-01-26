@@ -36,8 +36,10 @@ export default function StoreListPage() {
 
     // useInfiniteQuery
 
+    // Create a ref using useRef hook
     const ref = useRef<HTMLDivElement | null>(null);
 
+    // An empty object as the second argument ---> the default values(threshold, root, ...) will be used for configuration
     const pageRef = useIntersectionObserver(ref, {});
 
     const isPageEnd = !!pageRef?.isIntersecting;
@@ -52,6 +54,8 @@ export default function StoreListPage() {
             });
         return data;
     }
+
+    // lastPage : most recently loaded page of data
     const { data: stores, isFetching, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery("stores", fetchStores,
         { getNextPageParam: (lastPage: any) => lastPage.data?.length > 0 ? lastPage.page + 1 : undefined });
 
@@ -78,8 +82,6 @@ export default function StoreListPage() {
     if (isError) {
         return <div className="w-full h-screen mx-auto pt-[10%] text-red-500 font-semibold">다시 시도해 주세요</div>
     }
-
-
 
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
