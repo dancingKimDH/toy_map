@@ -12,11 +12,12 @@ export default function LoginPage() {
     const { status, data: session } = useSession();
     const router = useRouter();
 
-    useEffect(() => {
-        if(status === "authenticated") {
-            router.replace("/")
-        }
-    }, [router, status])
+    // useRouter을 이용한 redirect ---> signIn method에서 callbackUrl 속성으로 해결
+    // useEffect(() => {
+    //     if(status === "authenticated") {
+    //         router.replace("/")
+    //     }
+    // }, [router, status])
 
     return (
         <div className="flex flex-col justify-center px-6 lg:px-8 h-[60vh] mt-[100px]">
@@ -28,15 +29,13 @@ export default function LoginPage() {
             <div className="mt-10 mx-auto w-full max-w-sm">
                 <div className="flex flex-col gap-3">
                     <button type="button"
-                        onClick={() => signIn("google")}
+                        onClick={() => signIn("google", {callbackUrl: "/"})}
                         className="text-white flex gap-3 bg-[#4285f4] hover:bg-[#4285f4]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center">
                         <AiOutlineGoogle className="w-6 h-6" />Sign In with Google</button>
                     <button type="button"
-                        onClick={() => signIn("naver")}
+                        onClick={() => signIn("naver", {callbackUrl: "/"})}
                         className="text-white flex gap-4 bg-[#2db400] hover:bg-[#2db400]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center">
                         <SiNaver className="w-4 h-6" />Sign In with Naver</button>
-                    <button type="button" className="text-black flex gap-4 bg-[#fef01b] hover:bg-[#fef01b]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center">
-                        <RiKakaoTalkFill className="w-6 h-6" />Sign In with Kakao</button>
                 </div>
             </div>
         </div>
