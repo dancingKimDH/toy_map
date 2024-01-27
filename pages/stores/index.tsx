@@ -83,6 +83,10 @@ export default function StoreListPage() {
         return <div className="w-full h-screen mx-auto pt-[10%] text-red-500 font-semibold">다시 시도해 주세요</div>
     }
 
+    if (isFetching) {
+        return <Loader className="mt-[20%]"/>
+    }
+
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
             <ul role="list" className="divide-y divide-gray-100">
