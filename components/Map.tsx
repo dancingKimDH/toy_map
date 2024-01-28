@@ -42,6 +42,10 @@ export default function Map({setMap, lat, lng, zoom}: MapProps) {
 
   return (
     <>
+
+      {/* Script : a special component for loading external JS files ---> include the Kakao Map SDk */}
+      {/* strategy="afterInteractive" : to load the script after the page becomes interactive ---> the script won't block the rendering of the page */}
+      {/* onReady : an event handler that will execute the loadKakaoMap once the script is loaded */}
       <Script strategy="afterInteractive" type="text/javascript" onReady={loadKakaoMap}
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`} />
       <div id="map" className="w-full h-screen"></div>

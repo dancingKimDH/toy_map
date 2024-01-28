@@ -10,6 +10,7 @@ import Link from "next/link";
 import Pagination from "@/components/Pagination";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import Loader from "@/components/Loader";
+import SearchFilter from "@/components/SearchFilter";
 
 
 export default function StoreListPage() {
@@ -57,12 +58,15 @@ export default function StoreListPage() {
 
     // lastPage : most recently loaded page of data
     const { data: stores, isFetching, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery("stores", fetchStores,
-        { getNextPageParam: (lastPage: any) => lastPage.data?.length > 0 ? lastPage.page + 1 : undefined });
+        {
+            getNextPageParam: (lastPage: any) => lastPage.data?.length > 0 ? lastPage.page + 1 : undefined,
+            refetchOnWindowFocus: false,
+        });
 
 
     const fetchNext = useCallback(async () => {
         const res = await fetchNextPage();
-        if(res.isError) {
+        if (res.isError) {
             console.log(res.error);
         }
     }, [fetchNextPage])
@@ -84,11 +88,14 @@ export default function StoreListPage() {
     }
 
     if (isFetching) {
-        return <Loader className="mt-[20%]"/>
+        return <Loader className="mt-[20%]" />
     }
 
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
+
+            <SearchFilter />
+
             <ul role="list" className="divide-y divide-gray-100">
                 {isLoading ? <Loading /> : stores?.pages.map((page, index) => (
                     <React.Fragment key={index}>
