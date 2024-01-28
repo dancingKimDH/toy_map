@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import Loading from "@/components/Loading";
 import { StoreApiResponse, StoreType } from "@/interface";
@@ -14,6 +14,15 @@ import SearchFilter from "@/components/SearchFilter";
 
 
 export default function StoreListPage() {
+
+    const [q, setQ] = useState<string | null>(null);
+
+    const [district, setDistrict] = useState<string | null>(null);
+
+    const searchParams = {
+        q: q,
+        district: district,
+    }
 
     const router = useRouter();
 
@@ -50,14 +59,15 @@ export default function StoreListPage() {
             {
                 params: {
                     limit: 10,
-                    page: pageParam
+                    page: pageParam,
+                    ...searchParams,
                 }
             });
         return data;
     }
 
     // lastPage : most recently loaded page of data
-    const { data: stores, isFetching, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery("stores", fetchStores,
+    const { data: stores, isFetching, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(["stores", searchParams], fetchStores,
         {
             getNextPageParam: (lastPage: any) => lastPage.data?.length > 0 ? lastPage.page + 1 : undefined,
             refetchOnWindowFocus: false,
@@ -94,7 +104,7 @@ export default function StoreListPage() {
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
 
-            <SearchFilter />
+            <SearchFilter setQ={setQ} setDistrict={setDistrict} />
 
             <ul role="list" className="divide-y divide-gray-100">
                 {isLoading ? <Loading /> : stores?.pages.map((page, index) => (
