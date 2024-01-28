@@ -47,7 +47,7 @@ export default async function handler(
                 where: { id: id ? parseInt(id) : {} }
             }
         )
-        return res.status(200).json(id ? stores[0] : stores);
+        res.status(200).json(id ? stores[0] : stores);
     }
 
 
