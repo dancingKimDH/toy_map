@@ -90,7 +90,7 @@ export default function StoreListPage() {
             }, 500)
         }
         return () => clearTimeout(timerId);
-    }, [fetchNextPage, isPageEnd, hasNextPage])
+    }, [fetchNext, isPageEnd, hasNextPage])
 
     // The result of useQuery destructured into three props ---> isLoading, isError, data(data returned from the query, later renamed as stores)
     if (isError) {

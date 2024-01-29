@@ -5,14 +5,14 @@ import { HiOutlineMapPin } from "react-icons/hi2";
 import { StoreType } from "@/interface";
 import { useRouter } from "next/router";
 
-interface StoreBoxProps {
-    store: StoreType | null;
-    setStore: Dispatch<SetStateAction<any>>;
-}
+import { useRecoilState } from "recoil";
+import { currentStoreState } from "@/atom";
 
-export default function StoreBox({ store, setStore }) {
+export default function StoreBox() {
     
     const router = useRouter();
+
+    const [store, setStore] = useRecoilState(currentStoreState);
 
     return (
         <>

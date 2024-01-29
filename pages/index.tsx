@@ -1,4 +1,3 @@
-import Layout from "@/components/Layout";
 import Link from "next/link"
 import store from "@/data/store_data.json"
 import Map from "@/components/Map"
@@ -22,21 +21,18 @@ const DEFAULT_LNG = 127.03088379;
 
 export default function Home({ stores }: { stores: StoreType[] }) {
 
-  const [map, setMap] = useState(null);
-  const [currentStore, setCurrentStore] = useState(null);
- 
   return (
     <>
-      <Map setMap={setMap} />
-      <Markers stores={stores} map={map} setCurrentStore={setCurrentStore} />
-      <StoreBox store={currentStore} setStore={setCurrentStore} />
+      <Map />
+      <Markers stores={stores} />
+      <StoreBox />
     </>
 
   );
 }
 
 export async function getStaticProps() {
-  
+
   // data fetch 
   // const stores = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/store`).then((res) => res.json());
   // return {
