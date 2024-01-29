@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { StoreApiResponse, StoreType } from "@/interface";
 import { Prisma, PrismaClient } from "@prisma/client";
+import prisma from "@/db"
 
 interface ResponseType {
     page?: string;
@@ -14,7 +15,6 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<StoreApiResponse | StoreType[] | StoreType>
 ) {
-    const prisma = new PrismaClient;
 
     // pagination page setting
     const { page = "", limit = "", q, district }: ResponseType = req.query;

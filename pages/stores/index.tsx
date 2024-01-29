@@ -12,17 +12,17 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import Loader from "@/components/Loader";
 import SearchFilter from "@/components/SearchFilter";
 
+import { searchState } from "@/atom";
+import { useRecoilValue } from "recoil";
 
 export default function StoreListPage() {
 
-    const [q, setQ] = useState<string | null>(null);
-
-    const [district, setDistrict] = useState<string | null>(null);
-
+    const searchValue = useRecoilValue(searchState);
     const searchParams = {
-        q: q,
-        district: district,
+        q: searchValue?.q,
+        district: searchValue?.district,
     }
+
 
     const router = useRouter();
 
@@ -104,13 +104,13 @@ export default function StoreListPage() {
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
 
-            <SearchFilter setQ={setQ} setDistrict={setDistrict} />
+            <SearchFilter />
 
             <ul role="list" className="divide-y divide-gray-100">
                 {isLoading ? <Loading /> : stores?.pages.map((page, index) => (
                     <React.Fragment key={index}>
                         {page.data.map((store: StoreType, i: number) => (
-                            <li className="flex justify-between gap-x-6 py-5" key={index}>
+                            <li className="flex justify-between gap-x-6 py-5 cursor-pointer hover:bg-gray-50" key={index} onClick={() => router.push(`/stores/${store.id}`)}>
                                 <div className="flex gap-x-4">
                                     <Image width={48} height={48} alt="image"
                                         src={store?.category ? `/images/markers/${store?.category}.png` : "/images/markers/default.png"} />
