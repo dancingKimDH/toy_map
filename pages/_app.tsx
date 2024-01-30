@@ -7,6 +7,9 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import { RecoilRoot } from "recoil";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
+
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -19,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <SessionProvider session={session}>
           <Layout>
             <Component {...pageProps} />
+            <ToastContainer/>
           </Layout>
           <ReactQueryDevtools />
         </SessionProvider>
