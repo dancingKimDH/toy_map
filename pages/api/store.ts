@@ -23,6 +23,8 @@ export default async function handler(
 
         const data = req.body;
         const result = await prisma.store.create({
+            // data : ---> key in the key-value pair, a key expected as per its API, a name of the property
+            // ...data ---> spread operator, represents the value (from the req.body) that is being assigned to the 'data' key
             data: {...data},
         });
 

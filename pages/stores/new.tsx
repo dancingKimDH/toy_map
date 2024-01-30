@@ -13,11 +13,14 @@ export default function StoreNewPage() {
 
     return (
         <form className="px-4 md:max-w-4xl mx-auto py-8"
+
+            // data : attributes given to each form input and how they are registered in the useForm hook with the register function
+            // i.e. data.name ---> <input type="text" {...register("name", { required: true })} />
             onSubmit={handleSubmit(async (data) => {
                 try {
                     const result = await axios.post("/api/store", data);
 
-                    if(result.status === 200) {
+                    if (result.status === 200) {
                         toast.success("성공적으로 등록하였습니다")
                         router.replace(`/stores/${result?.data?.id}`)
 
