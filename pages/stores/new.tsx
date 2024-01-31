@@ -1,4 +1,6 @@
+import AddressSearch from "@/components/AddressSearch";
 import { CATEGORY_ARR, FOOD_CERTIFY_ARR, STORE_TYPE_ARR } from "@/data/store";
+import { StoreType } from "@/interface";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form"
@@ -7,7 +9,7 @@ import { toast } from "react-toastify";
 
 export default function StoreNewPage() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<StoreType>();
 
     const router = useRouter();
 
@@ -90,20 +92,7 @@ export default function StoreNewPage() {
                             }
                         </div>
 
-                        <div className="col-span-full">
-                            <label htmlFor="address" className="block text-sm font-medium leading-6 text-gray-900">
-                                주소(검색 API)
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    {...register("address", { required: true })}
-                                    className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                            {errors.address?.type === "required" &&
-                                <div className="pt-2 text-xs text-red-600">필수 입력 사항입니다</div>
-                            }
-                        </div>
+                        <AddressSearch setValue={setValue} register={register} errors={errors} />
 
                         <div className="sm:col-span-2 sm:col-start-1">
                             <label htmlFor="foodCertifyName" className="block text-sm font-medium leading-6 text-gray-900">
@@ -127,23 +116,26 @@ export default function StoreNewPage() {
                             <label htmlFor="storeType" className="block text-sm font-medium leading-6 text-gray-900">
                                 업종 구분
                             </label>
-                            <select {...register("storeType", { required: true })}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                <option value="">식품 인증 구분 선택</option>
-                                {STORE_TYPE_ARR.map((data) => (
-                                    <option value={data} key={data}>{data}</option>
-                                ))}
-                            </select>
-                            {errors.storeType?.type === "required" &&
-                                <div className="pt-2 text-xs text-red-600">필수 입력 사항입니다</div>
-                            }
+                            <div className="mt-2">
+                                <select {...register("storeType", { required: true })}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    <option value="">식품 인증 구분 선택</option>
+                                    {STORE_TYPE_ARR.map((data) => (
+                                        <option value={data} key={data}>{data}</option>
+                                    ))}
+                                </select>
+                                {errors.storeType?.type === "required" &&
+                                    <div className="pt-2 text-xs text-red-600">필수 입력 사항입니다</div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+                <button onClick={() => router.back()}
+                type="button" className="text-sm font-semibold leading-6 text-gray-900">
                     뒤로 가기
                 </button>
                 <button
