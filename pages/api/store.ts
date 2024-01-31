@@ -24,8 +24,6 @@ export default async function handler(
 
         const formData = req.body;
 
-
-
         // Kakao API
         const headers = {
             Authorization: `KakaoAK ${process.env.KAKAO_CLIENT_ID}`,
@@ -37,8 +35,27 @@ export default async function handler(
         const result = await prisma.store.create({
             //     data : ---> key in the key-value pair, a key expected as per its API, a name of the property
             //     ...data ---> spread operator, represents the value (from the req.body) that is being assigned to the 'data' key
-            data: { ...formData, lat:data.documents[0].y, lng: data.documents[0].x },
+            data: { ...formData, lat: data.documents[0].y, lng: data.documents[0].x },
         });
+
+        return res.status(200).json(result);
+
+    } else if (req.method === "PUT") {
+
+        const formData = req.body;
+
+        // Kakao API
+        const headers = {
+            Authorization: `KakaoAK ${process.env.KAKAO_CLIENT_ID}`,
+        };
+
+        const { data } = await axios.get(
+            `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURI(formData.address)}`, { headers })
+
+        const result = await prisma.store.update({
+            where: {id: formData.id},
+            data: {...formData, lat: data.documents[0].y, lng: data.documents[0].x}
+        })
 
         return res.status(200).json(result);
 
@@ -74,7 +91,9 @@ export default async function handler(
                 totalPage: Math.ceil(count / 10)
             });
 
-        } else {
+        }
+
+        else {
 
             const { id }: { id?: string } = req.query;
 
