@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 
 import { useRecoilState } from "recoil";
 import { currentStoreState } from "@/atom";
+import Like from "./Like";
 
 export default function StoreBox() {
-    
+
     const router = useRouter();
 
     const [store, setStore] = useRecoilState(currentStoreState);
@@ -31,9 +32,12 @@ export default function StoreBox() {
                                 </div>
                                 <button type="button" onClick={() => setStore(null)}><AiOutlineClose /></button>
                             </div>
-                            <div className="mt-2 flex gap-2 items-center">
-                                <HiOutlineMapPin />
-                                {store?.address}
+                            <div className="flex justify-between">
+                                <div className="mt-2 flex gap-2 items-center col-span-3">
+                                    <HiOutlineMapPin />
+                                    {store?.address}
+                                </div>
+                                <Like />
                             </div>
                             <div className="mt-2 flex gap-2 items-center">
                                 <AiOutlinePhone />
@@ -49,8 +53,8 @@ export default function StoreBox() {
                             </div>
                         </div>
                         <button type="button"
-                        className="w-full bg-blue-700 hover:bg-blue-500 focus:bg-blue-500 py-3 text-white font-semibold rounded-b-lg"
-                        onClick={() => router.push(`/stores/${store.id}`)}>상세 보기</button>
+                            className="w-full bg-blue-700 hover:bg-blue-500 focus:bg-blue-500 py-3 text-white font-semibold rounded-b-lg"
+                            onClick={() => router.push(`/stores/${store.id}`)}>상세 보기</button>
                     </>
                 )}
             </div>

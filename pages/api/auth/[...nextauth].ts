@@ -1,11 +1,11 @@
-import NextAuth from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
 import GoogleProvider from "next-auth/providers/google"
 import NaverProvider from "next-auth/providers/naver"
 import prisma from "@/db"
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   
   session: {
     strategy: "jwt" as const,
@@ -26,6 +26,22 @@ export const authOptions = {
   ],
   pages: {
     signIn: "/users/login"
+  },
+
+  callbacks: {
+    session: ({session, token}) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: token.sub,
+      },
+    }),
+    jwt: async ({user, token}) => {
+      if(user) {
+        token.sub = user.id;
+      }
+      return token;
+    }
   }
 }
 export default NextAuth(authOptions)
