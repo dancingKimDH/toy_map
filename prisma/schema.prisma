@@ -19,6 +19,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Likes Like[]
 }
 
 model Store {
@@ -31,6 +32,17 @@ model Store {
   category        String?
   storeType       String?
   foodCertifyName String?
+  Likes Like[]
+}
+
+model Like {
+    id              Int     @id @default(autoincrement())
+    createdAt       DateTime @default(now())
+    storeId         Int
+    userId          Int
+    store           Store @relation(fields:[storeId], references: [id], onDelete: Cascade)
+    user            User @relation(fields:[userId], references:[id], onDelete: Cascade)
+    @@index([userId, storeId])
 }
 
 model Account {
