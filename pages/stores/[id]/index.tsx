@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRouter } from "next/router"
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -15,6 +14,7 @@ import Like from "@/components/Like";
 export default function StorePage() {
 
     const router = useRouter();
+    // router.query contains the parsed query string params from the URL
     const { id } = router.query;
 
     const { status } = useSession();
@@ -24,6 +24,7 @@ export default function StorePage() {
         return data as StoreType
     }
 
+    // The useQuery hook is invoked immediately when the componenet renders and triggers the fetchStore function
     const { data: store, isFetching, isError, isSuccess } = useQuery(`store-${id}`, fetchStore, {
         enabled: !!id,
         refetchOnWindowFocus: false,

@@ -66,11 +66,15 @@ export default function StoreListPage() {
         return data;
     }
 
+    // useInfiniteQuery: similar to useRouter, desinged for fetching paginated data(infinite query)
     // lastPage : most recently loaded page of data
     const { data: stores, isFetching, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(["stores", searchParams], fetchStores,
+        // ["stores", searchParams]: first arg, array of keys that represents the query identifier: triggers a new fetch when changed
+        // fetchStore: second arg, the func responsible for fetching the data for a given page: called automatically by React Query
         {
             getNextPageParam: (lastPage: any) => lastPage.data?.length > 0 ? lastPage.page + 1 : undefined,
             refetchOnWindowFocus: false,
+            // prevents unwanted fetches
         });
 
 
@@ -108,8 +112,12 @@ export default function StoreListPage() {
 
             <ul role="list" className="divide-y divide-gray-100">
                 {isLoading ? <Loading /> : stores?.pages.map((page, index) => (
+                    // Fragments let you group a list of children without adding extra nodes to the DOM
+                    // In other words, when a dev wants to return multiple elems without wrapping them in a div/or any other parent element
+                    // Keyed Fragments
+                    // As alternative, the dev could choose to introduce the shorthand syntax as <> </> as well
                     <React.Fragment key={index}>
-                        {page.data.map((store: StoreType, i: number) => (
+                        {page.data.map((store: StoreType, index: number) => (
                             <li className="flex justify-between gap-x-6 py-5 cursor-pointer hover:bg-gray-50" key={index} onClick={() => router.push(`/stores/${store.id}`)}>
                                 <div className="flex gap-x-4">
                                     <Image width={48} height={48} alt="image"
