@@ -29,6 +29,7 @@ export default function Like({storeId}: LikeProps) {
         if(session?.user && store) {
             try {
                 const like = await axios.post("/api/likes", {
+                    // second arg containing the data to be sent in the request body
                     storeId: store.id,
                 });
                 if(like.status === 201) {
