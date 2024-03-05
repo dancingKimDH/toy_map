@@ -38,9 +38,9 @@ export default function Navbar() {
                     <div className="navbar__list-mobile">
                         <Link className="navbar__list-item-mobile" href="/stores">맛집 목록</Link>
                         <Link className="navbar__list-item-mobile" href="/stores/new">맛집 등록</Link>
-                        <Link className="navbar__list-item-mobile" href="/stores">맛집 목록</Link>
+                        <Link className="navbar__list-item" href="/users/mypage">마이페이지</Link>
                         <Link className="navbar__list-item-mobile" href="/users/likes">찜한 가게</Link>
-                        <Link className="navbar__list-item-mobile" href="/api/auth/signin">로그인</Link>
+                        {status === "authenticated" ? <div className="navbar__list-item"><button onClick={() => signOut()}>로그아웃</button></div> : <Link className="navbar__list-item" href="/api/auth/signin">로그인</Link>}
                     </div>
                 </div>
             )}
