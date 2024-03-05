@@ -23,6 +23,14 @@ export interface LikeInterface {
     id: number;
     storeId: number;
     userId: number;
+    store?: StoreType;
+}
+
+export interface LikeApiInterface {
+    data?: LikeInterface[];
+    totalPage?: number;
+    totalCount?: number;
+    page?: number;
 }
 
 export interface StoreApiResponse {
