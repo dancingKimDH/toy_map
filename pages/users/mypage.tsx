@@ -14,6 +14,9 @@ export default function MyPage() {
                 <dl className="divide-y divide-gray-100">
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">이름</dt>
+                        {/* ??: Nullish coalescing operator: if the variable is null or undefined, it provides a default value */}
+                        {/* ? : Optional chaining operator: const result = obj?.method();
+                              : Ternary conditional operator: const result = condition ? trueValue : falseValue */}
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{session?.user.name ?? "사용자"}</dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -22,6 +25,7 @@ export default function MyPage() {
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">프로필</dt>
+                        {/* ||: Logical or operator: if the value is falsy, will be replaced with the default value */}
                         <img width={48} height={48} className="rounded-full" src={session?.user.image || "/images/markers/default.png"} alt="이미지 프로필" />
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
