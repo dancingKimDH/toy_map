@@ -33,6 +33,21 @@ export interface LikeApiInterface {
     page?: number;
 }
 
+export interface CommentInterface {
+    id: number;
+    storeId: number;
+    userId: number;
+    store?: StoreType;
+    body?: string;
+}
+
+export interface CommentApiInterface {
+    data?: LikeInterface[];
+    totalPage?: number;
+    totalCount?: number;
+    page?: number;
+}
+
 export interface StoreApiResponse {
     data: StoreType[];
     totalPage?: number;
