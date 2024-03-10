@@ -16,10 +16,10 @@ export default function Navbar() {
                 <div className="navbar__logo">
                     <Link href="/"> nextmap </Link></div>
                 <div className="navbar__list">
-                    <Link className="navbar__list-item" href="/stores">맛집 목록</Link>
-                    <Link className="navbar__list-item" href="/stores/new">맛집 등록</Link>
-                    <Link className="navbar__list-item" href="/users/mypage">마이페이지</Link>
-                    <Link className="navbar__list-item" href="/users/likes">찜한 가게</Link>
+                    <Link className="navbar__list-item" href="/stores" onClick={() => setIsOpen(false)}>맛집 목록</Link>
+                    <Link className="navbar__list-item" href="/stores/new" onClick={() => setIsOpen(false)}>맛집 등록</Link>
+                    <Link className="navbar__list-item" href="/users/mypage" onClick={() => setIsOpen(false)}>마이페이지</Link>
+                    <Link className="navbar__list-item" href="/users/likes" onClick={() => setIsOpen(false)}>찜한 가게</Link>
 
                     {status === "authenticated" ? <button onClick={() => signOut()}>로그아웃</button> : <Link className="navbar__list-item" href="/api/auth/signin">로그인</Link>}
 
@@ -36,11 +36,11 @@ export default function Navbar() {
             {isOpen && (
                 <div className="navbar-mobile">
                     <div className="navbar__list-mobile">
-                        <Link className="navbar__list-item-mobile" href="/stores">맛집 목록</Link>
-                        <Link className="navbar__list-item-mobile" href="/stores/new">맛집 등록</Link>
-                        <Link className="navbar__list-item" href="/users/mypage">마이페이지</Link>
-                        <Link className="navbar__list-item-mobile" href="/users/likes">찜한 가게</Link>
-                        {status === "authenticated" ? <div className="navbar__list-item"><button onClick={() => signOut()}>로그아웃</button></div> : <Link className="navbar__list-item" href="/api/auth/signin">로그인</Link>}
+                        <Link className="navbar__list-item-mobile" href="/stores" onClick={() => setIsOpen(false)}>맛집 목록</Link>
+                        <Link className="navbar__list-item-mobile" href="/stores/new" onClick={() => setIsOpen(false)}>맛집 등록</Link>
+                        <Link className="navbar__list-item" href="/users/mypage" onClick={() => setIsOpen(false)}>마이페이지</Link>
+                        <Link className="navbar__list-item-mobile" href="/users/likes" onClick={() => setIsOpen(false)}>찜한 가게</Link>
+                        {status === "authenticated" ? <div className="navbar__list-item" onClick={() => setIsOpen(false)}><button onClick={() => signOut()}>로그아웃</button></div> : <Link className="navbar__list-item" href="/api/auth/signin">로그인</Link>}
                     </div>
                 </div>
             )}

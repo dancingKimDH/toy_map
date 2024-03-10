@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* apply: apply pre-defined utility classes to apply styles direclty in the HTML */
 .navbar {
   @apply flex justify-between items-center fixed w-full h-[52px] top-0 shadow-sm bg-white z-10;
 }

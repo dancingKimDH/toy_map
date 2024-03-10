@@ -13,7 +13,7 @@ interface LikeProps {
 
 export default function Like({storeId}: LikeProps) {
 
-    const {data: session} = useSession();
+    const {data: session, status} = useSession();
 
     const fetchStore = async () => {
         const { data } = await axios(`/api/store?id=${storeId}`)
@@ -43,13 +43,15 @@ export default function Like({storeId}: LikeProps) {
             } catch (error) {
                 console.log(error)
             }
+        } else if(status === 'unauthenticated') {
+            toast.warn("로그인 후 이용해 주세요")
         }
     }
 
     return(
 
         <button type="button" onClick={toggleLike}>    
-            {store?.Likes?.length ? <AiFillHeart className="hover:text-red-600 focus:text-red-600 text-red-500"/> : 
+            {status === "authenticated" && store?.Likes?.length ? <AiFillHeart className="hover:text-red-600 focus:text-red-600 text-red-500"/> : 
             <AiOutlineHeart/>}
         </button>
         
