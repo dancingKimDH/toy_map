@@ -19,7 +19,7 @@ export default async function handler(
             return res.status(401)
         }
         
-        const {storeId, body}: {storeId: string, body: string} = req.body;
+        const {storeId, body}: {storeId: number, body: string} = req.body;
         const comment = await prisma.comment.create({
             data: {
                 storeId,
@@ -27,6 +27,8 @@ export default async function handler(
                 userId: session?.user.id,
             }
         })
+
+        return res.status(200).json(comment);
 
         if(req.method === "POST") {
             // create comment
