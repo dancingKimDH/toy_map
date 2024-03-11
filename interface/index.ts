@@ -41,7 +41,7 @@ export interface CommentInterface {
     body?: string;
 }
 
-export interface CommentApiInterface {
+export interface CommentApiResponse {
     data?: LikeInterface[];
     totalPage?: number;
     totalCount?: number;
