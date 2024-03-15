@@ -17,11 +17,11 @@ export default function Comments({ storeId }: CommentProps) {
     const { status } = useSession();
 
     const router = useRouter();
-
-    const { page = "1" } = router.query;
+0
+    const { page = "1" }: any = router.query;
 
     const fetchComments = async () => {
-        const { data } = await axios(`api/comment?storeId=${storeId}&limit=10&page=${page}`);
+        const { data } = await axios.get(`/api/comments?storeId=${storeId}&limit=10&page=${page}`);
         return data as CommentApiResponse;
     }
 

@@ -38,7 +38,7 @@ export interface CommentInterface {
     storeId: number;
     userId: number;
     store?: StoreType;
-    body?: string;
+    body: string;
 }
 
 export interface CommentApiResponse {

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import prisma from "@/db";
 import { authOptions } from "./auth/[...nextauth]";
-import { CommentApiInterface, CommentInterface } from "@/interface";
+import { CommentApiResponse, CommentInterface } from "@/interface";
 
 interface Responsetype {
     page?: string,
@@ -12,11 +12,11 @@ interface Responsetype {
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<CommentApiInterface | CommentInterface>) {
+    res: NextApiResponse<CommentApiResponse | CommentInterface>) {
 
     const session = await getServerSession(req, res, authOptions);
 
-    const { page = "1", limit = "10", storeId = "" }: ResponseType = req.query;
+    const { page = "1", limit = "10", storeId = "" }: Responsetype = req.query;
 
     if (req.method === "POST") {
 
@@ -60,6 +60,7 @@ export default async function handler(
             skip: skipPage * parseInt(limit),
             take: parseInt(limit),
         });
+        
         return res.status(200).json({
             data: comments,
             page: parseInt(page),

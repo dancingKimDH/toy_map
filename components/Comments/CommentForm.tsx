@@ -16,7 +16,7 @@ export default function CommentForm({ storeId }: CommentFormProps) {
     return (
         <form className="flex flex-col space-y-2"
             onSubmit={handleSubmit(async (data) => {
-                const result = await axios.post('/api/comment', {
+                const result = await axios.post('/api/comments', {
                     ...data,
                     storeId
                 })
