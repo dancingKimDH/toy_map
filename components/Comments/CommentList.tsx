@@ -36,8 +36,8 @@ export default function CommentList({comments}: CommentListProps) {
                 comments?.data?.map((comment) => (
                    <div key={comment.id} className="flex items-center space-x-4 text-sm text-gray-500 mb-8 border-b border-gray-300 pb-4">
                         <div>
-                            <img className="rounded-full bg-gray-10" alt="profile image" 
-                            width={40} height={40} src={comment?.user?.image || '/images/markers/default.png'}/>
+                            <img className="rounded-full bg-gray-10 h-10 w-10" alt="profile image" 
+                            width={40} height={40}  src={comment?.user?.image || '/images/markers/default.png'}/>
                         </div>
                         <div className="flex flex-col flex-1 space-y-2">
                             <div>
