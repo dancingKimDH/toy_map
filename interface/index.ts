@@ -19,11 +19,21 @@ export interface StoreType {
     Likes?: LikeInterface[];
 }
 
+export interface User {
+    id: number;
+    email: string;
+    name?: string | null;
+    image?: string;
+}
+
 export interface LikeInterface {
+    createdAt: any;
+    user: any;
     id: number;
     storeId: number;
     userId: number;
     store?: StoreType;
+    body?: string;
 }
 
 export interface LikeApiInterface {
@@ -39,6 +49,8 @@ export interface CommentInterface {
     userId: number;
     store?: StoreType;
     body: string;
+    user?: User;
+    createdAt?: Date;
 }
 
 export interface CommentApiResponse {

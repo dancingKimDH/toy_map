@@ -8,6 +8,7 @@ interface Responsetype {
     page?: string,
     limit?: string,
     storeId?: string,
+    id?: string;
 }
 
 export default async function handler(
@@ -16,7 +17,7 @@ export default async function handler(
 
     const session = await getServerSession(req, res, authOptions);
 
-    const { page = "1", limit = "10", storeId = "" }: Responsetype = req.query;
+    const { id= "", page = "1", limit = "10", storeId = "" }: Responsetype = req.query;
 
     if (req.method === "POST") {
 
@@ -39,6 +40,19 @@ export default async function handler(
 
     } else if (req.method === "DELETE") {
         // delete comment
+
+        if(!session?.user || !id) {
+            return res.status(401);
+        }
+
+        const result = await prisma.comment.delete({
+            where: {
+                id: parseInt(id),
+            }
+        })
+
+        return res.status(200).json(result);
+
     } else {
         // get comment
 
@@ -59,6 +73,9 @@ export default async function handler(
             },
             skip: skipPage * parseInt(limit),
             take: parseInt(limit),
+            include: {
+                user: true
+            }
         });
         
         return res.status(200).json({
