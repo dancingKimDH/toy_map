@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import CommentList from "@/components/Comments/CommentList";
 import Pagination from "@/components/Pagination";
+
 import { CommentApiResponse } from "@/interface";
 import axios from "axios";
 import { useSession, signOut } from "next-auth/react"
@@ -61,9 +62,8 @@ export default function MyPage() {
                         <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">댓글 리스트</p>
                     </div>
                     <CommentList comments={comments} displayStore={true} />
-                    {comments?.totalPage && (
-                        <Pagination total={comments?.totalpage} page={page} pathName="/users/mypage" />
-                    )}
+                    <Pagination total={comments?.totalPage} page={page} pathName="/users/mypage" />
+
                 </dl>
             </div>
         </div>

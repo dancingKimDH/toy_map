@@ -33,10 +33,7 @@ export default function LikesPage() {
                     ))) : <div>데이터가 없습니다</div>
                 }
             </ul>
-            {likes?.totalPage && likes?.totalPage > 0 &&
-                <Pagination total={likes?.totalPage} page={page} pathName="/users/likes"/>
-            }
-
+            <Pagination total={likes?.totalPage} page={page} pathName="/users/likes" />
         </div>
     )
 }
