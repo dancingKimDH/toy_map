@@ -23,12 +23,12 @@ export interface User {
     id: number;
     email: string;
     name?: string | null;
-    image?: string;
+    image?: string | null;
 }
 
 export interface LikeInterface {
     createdAt: any;
-    user: any;
+    user?: User;
     id: number;
     storeId: number;
     userId: number;
@@ -65,6 +65,7 @@ export interface StoreApiResponse {
     totalPage?: number;
     totalCount?: number;
     page?: number;
+    Likes?: LikeInterface;
 }
 
 export interface LocationType {

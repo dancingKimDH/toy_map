@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { StoreApiResponse, StoreType } from "@/interface";
+import { LikeInterface, StoreApiResponse, StoreType } from "@/interface";
 import { Prisma, PrismaClient } from "@prisma/client";
 import prisma from "@/db"
 import axios from "axios";
@@ -17,7 +17,7 @@ interface ResponseType {
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<StoreApiResponse | StoreType[] | StoreType | null>
+    res: NextApiResponse<StoreApiResponse | StoreType[] | StoreType | null | LikeInterface>
 ) {
 
     // ServerSide Session - getId

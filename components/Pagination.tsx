@@ -1,15 +1,15 @@
 import Link from "next/link"
 
 interface Pagination {
-    total: number;
+    total?: number;
     page: string;
     pathName: string;
 }
 
-export default function Pagination({ total, page, pathName }: Pagination) {
+export default function Pagination({ total = 0, page, pathName }: Pagination) {
     return (
         <div className="py-6 w-full px-10 flex justify-center gap-3 bg-white my-10 flex-wrap text-black">
-            
+
             {/* Creates a new array with a length equal to 'total' + ... : Spreads elements/props into individual elements */}
             {/* In the context of the pagination code, the array doesn't need to hold any values but exist so that the .map() method can iterate over it */}
             {total <= 10 ? [...Array(total)].map((x, i) => (
