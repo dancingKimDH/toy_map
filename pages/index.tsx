@@ -9,6 +9,7 @@ import axios from "axios";
 import Script from "next/script";
 import Markers from "@/components/Markers";
 import { StoreType } from "@/interface";
+import CurrentLocationButton from "@/components/CurrentLocationButton";
 
 declare global {
   interface Window {
@@ -26,6 +27,7 @@ export default function Home({ stores }: { stores: StoreType[] }) {
       <Map />
       <Markers stores={stores} />
       <StoreBox />
+      <CurrentLocationButton/>
     </>
 
   );
