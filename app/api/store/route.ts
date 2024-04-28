@@ -4,7 +4,7 @@ import prisma from "@/db"
 import axios from "axios";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/authOptions";
 
 interface ResponseType {
     page?: string;
