@@ -14,10 +14,10 @@ interface CommentProps {
     storeId: number;
 }
 
-export default function MyPage({params}: {params: {page: string}}) {
+export default function MyPage({searchParams}: {searchParams: {page: string}}) {
 
     const router = useRouter();
-    const page = params.page || "1";
+    const page = searchParams.page || "1";
 
     const fetchComments = async () => {
         const { data } = await axios.get(`/api/comments?&limit=5&page=${page}&user=${true}`);
