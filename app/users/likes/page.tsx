@@ -1,23 +1,23 @@
+'use client';
+
 import Loading from "@/components/Loading"
 import Pagination from "@/components/Pagination"
 import StoreListBox from "@/components/StoreListBox"
-import { LikeApiInterface, LikeInterface, StoreType } from "@/interface"
+import { LikeApiInterface, LikeInterface } from "@/interface"
 import axios from "axios"
-import { useRouter } from "next/router"
 import React from "react"
 import { useQuery } from "react-query"
 
-export default function LikesPage() {
+export default function LikesPage({ params }: { params: { page: string } }) {
 
-    const router = useRouter()
-    const { page = "1" }: any = router.query;
+    const page = params.page || "1";
 
     const fetchLikes = async () => {
         const { data } = await axios(`/api/likes?limit=10&page=${page}`)
         return data as LikeApiInterface
     }
 
-    const { data: likes, isError, isLoading } = useQuery(`likes-${page}`, fetchLikes)
+    const { data: likes, isError, isLoading, isSuccess } = useQuery(`likes-${page}`, fetchLikes)
 
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
@@ -32,8 +32,13 @@ export default function LikesPage() {
                         <StoreListBox index={index} store={like.store} key={index} />
                     ))) : <div>데이터가 없습니다</div>
                 }
-            </ul>
-            <Pagination total={likes?.totalPage} page={page} pathName="/users/likes" />
-        </div>
+
+                {isSuccess && !!!likes.data &&
+                    < div className="p-4 border border-gray-200 rounded-md text-sm"> 찜한 가게가 없습니다 </div>
+                }
+
+            </ul >
+    <Pagination total={likes?.totalPage} page={page} pathName="/users/likes" />
+        </div >
     )
 }

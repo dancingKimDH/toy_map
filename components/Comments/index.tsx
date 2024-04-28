@@ -1,27 +1,28 @@
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
 import CommentForm from "./CommentForm";
 
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { CommentApiResponse } from "@/interface";
 import { useQuery } from "react-query";
-import { cp } from "fs";
+
 import CommentList from "./CommentList";
 import Pagination from "../Pagination";
 
 interface CommentProps {
     storeId: number;
+    params?: {
+        page?: string,
+    } 
 }
 
-export default function Comments({ storeId }: CommentProps) {
+export default function Comments({ storeId, params }: CommentProps) {
 
     const { status, data: session } = useSession();
 
     const router = useRouter();
     0
-    const { page = "1" }: any = router.query;
+    const page = params?.page || "1";
 
     const fetchComments = async () => {
         const { data } = await axios.get(`/api/comments?storeId=${storeId}&limit=5&page=${page}`);

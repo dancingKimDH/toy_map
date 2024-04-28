@@ -1,11 +1,10 @@
+'use client';
+
 import { AiOutlineGoogle } from "react-icons/ai";
-import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
 
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router"
-
-import { useEffect } from "react";
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
 

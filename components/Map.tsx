@@ -1,3 +1,5 @@
+'use client';
+
 import Layout from "@/components/Layout";
 import Link from "next/link"
 import stores from "@/data/store_data.json"

@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+'use client';
+
+import React, { useCallback, useEffect, useRef } from "react";
 
 import Loading from "@/components/Loading";
-import { StoreApiResponse, StoreType } from "@/interface";
+import { StoreType } from "@/interface";
 import axios from "axios";
-import Image from "next/image";
-import { useQuery, useInfiniteQuery } from "react-query";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import Pagination from "@/components/Pagination";
+
+import { useInfiniteQuery } from "react-query";
+
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import Loader from "@/components/Loader";
 import SearchFilter from "@/components/SearchFilter";
@@ -24,11 +24,7 @@ export default function StoreListPage() {
         district: searchValue?.district,
     }
 
-
-    const router = useRouter();
-
     // destructure page from router.query ---> /store?page=2 ---> page:"2"
-    const { page = "1" }: any = router.query;
 
     // useQuery Hook: Manage and cache asynchronous data in React app
     // `stores-${page}`: Query Key ---> unique identifier for the query ... Each page with own cache entry
@@ -119,7 +115,7 @@ export default function StoreListPage() {
                     // As alternative, the dev could choose to introduce the shorthand syntax as <> </> as well
                     <React.Fragment key={index}>
                         {page.data.map((store: StoreType, index: number) => (
-                            <StoreListBox store={store} index={index} key={index}/>
+                            <StoreListBox store={store} index={index} key={index} />
                         ))}
 
                     </React.Fragment>
