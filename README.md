@@ -5,10 +5,10 @@
 
 ## Key Features
 
-- [바로가기][https://toy-map.vercel.app)
+- [바로가기](https://toy-map.vercel.app)
   ```
-  - 테스트ID: test123@test.com
-  - 테스트PW: 12345678
+  - 테스트ID: 
+  - 테스트PW: 
   ```
 
 ## Tech Stack
