@@ -11,18 +11,14 @@ import Pagination from "../Pagination";
 
 interface CommentProps {
     storeId: number;
-    searchParams?: {
-        page?: string,
-    } 
+    page: string,
 }
 
-export default function Comments({ storeId, searchParams }: CommentProps) {
+export default function Comments({ storeId, page }: CommentProps) {
 
     const { status, data: session } = useSession();
 
     const router = useRouter();
-    0
-    const page = searchParams?.page || "1";
 
     const fetchComments = async () => {
         const { data } = await axios.get(`/api/comments?storeId=${storeId}&limit=5&page=${page}`);
