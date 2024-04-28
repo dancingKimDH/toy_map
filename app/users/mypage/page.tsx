@@ -1,21 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
+'use client';
+
 import CommentList from "@/components/Comments/CommentList";
 import Pagination from "@/components/Pagination";
 
 import { CommentApiResponse } from "@/interface";
 import axios from "axios";
 import { useSession, signOut } from "next-auth/react"
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
 
 interface CommentProps {
     storeId: number;
 }
 
-export default function MyPage() {
+export default function MyPage({params}: {params: {page: string}}) {
 
     const router = useRouter();
-    const { page = "1" }: any = router.query;
+    const page = params.page || "1";
 
     const fetchComments = async () => {
         const { data } = await axios.get(`/api/comments?&limit=5&page=${page}&user=${true}`);
