@@ -18,12 +18,6 @@ import StoreListBox from "@/components/StoreListBox";
 
 export default function StoreListPage() {
 
-    const searchValue = useRecoilValue(searchState);
-    const searchParams = {
-        q: searchValue?.q,
-        district: searchValue?.district,
-    }
-
     // destructure page from router.query ---> /store?page=2 ---> page:"2"
 
     // useQuery Hook: Manage and cache asynchronous data in React app
@@ -44,12 +38,20 @@ export default function StoreListPage() {
     // useInfiniteQuery
 
     // Create a ref using useRef hook
-    const ref = useRef<HTMLDivElement | null>(null);
+
+    const ref = useRef<HTMLDivElement>(null);
 
     // An empty object as the second argument ---> the default values(threshold, root, ...) will be used for configuration
+    
     const pageRef = useIntersectionObserver(ref, {});
 
     const isPageEnd = !!pageRef?.isIntersecting;
+
+    const searchValue = useRecoilValue(searchState);
+    const searchParams = {
+        q: searchValue?.q,
+        district: searchValue?.district,
+    }
 
     const fetchStores = async ({ pageParam = 1 }) => {
         const { data } = await axios("/api/store?page=" + pageParam,
@@ -90,7 +92,9 @@ export default function StoreListPage() {
                 fetchNext();
             }, 500)
         }
+        
         return () => clearTimeout(timerId);
+
     }, [fetchNext, isPageEnd, hasNextPage])
 
     // The result of useQuery destructured into three props ---> isLoading, isError, data(data returned from the query, later renamed as stores)
@@ -101,6 +105,10 @@ export default function StoreListPage() {
     if (isFetching) {
         return <Loader className="mt-[20%]" />
     }
+
+    console.log(stores);
+    console.log(`isPageEnd is ${!!isPageEnd}`);
+
 
     return (
         <div className="px-4 md:max-w-4xl mx-auto py-8">
@@ -127,9 +135,9 @@ export default function StoreListPage() {
                 <Pagination total={stores?.totalPage} page={page} />
             } */}
 
-            {isFetching && hasNextPage && <Loader />}
+            {isFetching || hasNextPage || isFetchingNextPage && <Loader />}
 
-            <div className="w-full touch-none h-10 mb-10" ref={ref} />
+            <div className="z-999 w-full touch-none h-10 mb-10" ref={ref} />
 
         </div>
     )
